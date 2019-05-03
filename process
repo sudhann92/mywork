@@ -1,0 +1,24 @@
+#!/bin/bash
+
+process="$1"
+#service --status-all | grep running | grep "$process"
+#service=$(ps -ef|grep "$process"|grep -v grep|grep -v $0 | wc -l)
+#if (( $(ps -ef|grep "$process"|grep -v grep|grep -v $0 | wc -l) > 0 ))
+
+if [ -z "$process" ]
+then
+       echo "Message: string not supplied as argument!";
+exit
+
+fi
+#service=$(ps -ef|grep "$process"|grep -v grep|grep -v $0 | wc -l)
+
+ if [ "$(ps -ef|grep "$process"|grep -v grep|grep -v $0 | wc -l)" -ne 0 ]
+then
+        echo "$process is running"
+
+else
+        echo "$process is not running"
+
+fi
+
