@@ -1,0 +1,19 @@
+---
+ - hosts: localhost
+   connection: local
+   gather_facts: no
+   tasks:
+     -name: Install ec2 instance
+      ec2:       #module for install the instakey_name: keypair
+         instance_type: t2.micro
+         image: ami-0015b9ef68c77328d
+         region: us-east-1
+         group: launch-wizard-1
+         count: 1
+         vpc_subnet_id: subnet-953f8dbb
+         wait: yes
+         assign_public_ip: yes
+         instance_tags:
+             Name: webhost
+
+      
