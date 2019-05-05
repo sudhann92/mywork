@@ -8,7 +8,7 @@ then
 echo "$service is running" > /dev/null
 else
 
-systemctl start altiris
+systemctl start "service name"
 
 fi
 exit 
