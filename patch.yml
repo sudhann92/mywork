@@ -1,0 +1,32 @@
+---
+ - hosts: web
+   become: true
+   become_user: root
+   tasks:
+   - name: verifying application
+     shell: if ps -eaf | grep "httpd"| grep -v grep > /dev/null; then echo "process_running" ; else echo "process_not_running" ; fi
+     ignore_errors: true
+     register: app_check
+   - debug: msg="{{ app_check.stdout }}"
+
+   - name: decision point
+     fail: msg="{{ inventary_hostname }} have running application.plz stop app,then attempt patching"
+     when: app_check == "process_running"
+
+   - name: updat patching
+     yum: name=kernel-default state=latest
+     when: app_check.stdout == "process_not_running"
+     register: yum_update
+   - debug: msg="kernel patch {{ ansible_kernel }} has been patched on the server {{ ansible_hostname }}"
+     when: yum_update.rc == 0
+
+   - name: check if reboot required after kernel
+     shell: kernel_new=$(rpm-qa --last kernel | head -1 | awk '{ print $1 }'| sed 's/kernel-//g'); kernel_now=$(uname -r); if [[ $kernel_new != $kernel_now ]];then echo "reboot is required" ; else echo "reboot not required" ; fi
+     ignore_errors: true
+     register: reboot_check
+   - debug: msg="{{ reboot_check.stdout }}"
+
+   - name: reboot iniated
+     command: "reboot"
+     when: reboot_check.stdout == "reboot is required"
+   - debug: msg="{{ ansible_hostname }} reboot iniated"
