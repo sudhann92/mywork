@@ -27,12 +27,12 @@ tags  {
 
 provisioner "file" {
     source = "scripts"
-    destination = "/tmp/"
+    destination = "/tmp/scripts"
   }
 provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/scripts",
-      "sudo /tmp/scripts.sh"
+      "sudo bash /tmp/scripts"
     ]
   }
   connection {
