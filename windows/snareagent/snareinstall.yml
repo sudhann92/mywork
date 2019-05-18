@@ -12,6 +12,14 @@
  - hosts: windows
    gather_facts: no
    tasks:
+   
+ # Give the admin privileage to the user
+
+   - name: grant the ansible user the SeTcbPrivilege right
+     win_user_right:
+       name: SeTcbPrivilege
+       users: '{{ansible_user}}'
+       action: add
 
 # Copied the source files to destination server
 
