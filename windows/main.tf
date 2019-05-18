@@ -10,6 +10,10 @@ tags {
   subnet_id = "${var.subnet}"
   associate_public_ip_address = "${var.public_ip}"
   vpc_security_group_ids = ["${var.security_group}"]
+   provisioner "local-exec" {
+    command = "echo ${aws_instance.example_instance.private_ip} >> private.txt"
+  }
+
   user_data = <<EOF
 <powershell>
 net user ${var.instance_username} ${var.instance_password} /add
@@ -24,3 +28,8 @@ winrm set winrm/config/service/auth '@{Basic="true"}'
 </powershell>
 EOF
 }
+
+output "ip" {
+  value = "${aws_instance.example_instance.public_ip}"
+}
+
