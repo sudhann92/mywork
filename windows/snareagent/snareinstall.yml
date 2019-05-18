@@ -1,0 +1,34 @@
+---
+ - hosts: windows
+   gather_facts: no
+   tasks:
+
+# Copied the source files to destination server
+
+   - name : Copy to destination server
+     win_copy:
+         src: /tmp/snare/
+         dest: C:\Users\Administrator\Downloads
+         backup: yes
+
+# Installed the packages to destination server
+
+   - name: Install the packages
+     win_command: SnareForWindows-4.0.1.2-MultiArch.exe /verysilent /LoadInf="settings.inf"
+     args:
+       chdir: C:\Users\Administrator\Downloads
+
+#Check the service status
+
+   - name: Service status
+     win_service:
+        name: snare
+        state: started
+
+# Removed the source file from the destination server
+
+   - name: Remove the source file
+     win_file:
+        path: C:\Users\Administrator\Downloads\SnareForWindows-4.0.1.2-MultiArch.exe
+        state: absent
+
