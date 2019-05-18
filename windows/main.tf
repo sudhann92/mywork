@@ -14,6 +14,13 @@ tags {
 <powershell>
 net user ${var.instance_username} ${var.instance_password} /add
 net localgroup administrators ${var.instance_username} /add
+set-executionpolicy -executionpolicy remotesigned
+$url = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
+$file = "$env:temp\ConfigureRemotingForAnsible.ps1"
+(New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
+powershell.exe -ExecutionPolicy ByPass -File $file
+winrm set winrm/config/service '@{AllowUnencrypted="true"}'
+winrm set winrm/config/service/auth '@{Basic="true"}'
 </powershell>
 EOF
 }
