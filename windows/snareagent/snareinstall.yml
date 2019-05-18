@@ -3,7 +3,7 @@
 ## After installation naviagate to the installed snare path through command prompt
 ## Enter the command snarecore.exe -x you could see the parameter which you given on installation time
 ## Then Export that Information file by using snarecore.exe -x setting.inf you could see one file in your installed snare agent path
-## Copy that inf file and source .exe file to ansible host 
+## Copy that inf file and source .exe file to ansible control node 
 ## You can use this command for silent installation with your paramater "SnareForWindows-4.0.1.2-MultiArch.exe /verysilent /LoadInf="settings.inf""
 ## Then write the Ansible playbook by using win modules
 
