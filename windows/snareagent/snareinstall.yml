@@ -1,3 +1,13 @@
+## Before create the Ansible playbook:
+## Insatll the Snare agent manually in one of the server.Give the parmeters manually 
+## After installation naviaget to the installed snare path through command prompt
+## Enter the command snarecore.exe -x you could see the parameter which you given on installation time
+## Then Export that Information file by using snarecore.exe -x setting.inf you could see one file in your installed snare agent path
+## Copy that settings and source exe file to ansible host 
+## You can use this command for silent installation with your paramater "SnareForWindows-4.0.1.2-MultiArch.exe /verysilent /LoadInf="settings.inf""
+## Then write the Ansible playbook 
+
+
 ---
  - hosts: windows
    gather_facts: no
