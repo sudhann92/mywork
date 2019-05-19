@@ -1,12 +1,3 @@
-provider "aws" {
-
-   access_key = "${var.aws_access_key}"
-   secret_key = "${var.aws_sceret_key}"
-   region = "${var.aws_region}"
-}
-
-[vagrant@localhost terraform]$ vi instance.tf
-[vagrant@localhost terraform]$ cat instance.tf
 resource "aws_key_pair" "pairkey" {
   key_name = "pairkey"
   public_key = "${file("${var.path_public_key}")}"
